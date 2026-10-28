@@ -9,6 +9,6 @@ An 8-question One Piece quiz built with HTML, CSS and JavaScript.
 ## Run
 Open `index.html` in a browser.
 
-**Live link:** https://YOUR-QUIZ.vercel.app  <!-- add after deploying -->
+**Live link:** https://quiz-app-theta-ashy-30.vercel.app/  <!-- add after deploying -->
 
 **Author:** Raghav Gattani
