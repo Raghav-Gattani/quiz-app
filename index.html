@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One Piece Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:Nunito,sans-serif;background:linear-gradient(#0a1a33,#12305a);color:#fff;padding:16px}
+.box{background:#fff6e0;color:#3b2a14;width:min(560px,100%);padding:26px;border:5px double #3b2a14;border-radius:10px}
+h1{font-family:'Pirata One';color:#e63946;text-align:center;margin:0 0 4px;font-size:2.2rem}
+.top{display:flex;justify-content:space-between;font-weight:700;margin:10px 0}
+.bar{height:10px;background:#0002;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:#e63946;width:0;transition:.3s}
+h2{font-size:1.2rem}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:11px;border:3px solid #3b2a14;background:#fff;border-radius:8px;font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){background:#f7c948}.opt.ok{background:#8fd694}.opt.no{background:#f4a3a3}
+#next,#again{background:#e63946;color:#fff;border:2px solid #f7c948;border-radius:8px;padding:10px 22px;font:700 1rem Nunito;cursor:pointer;margin-top:10px}
+#next{display:none}.center{text-align:center}
+</style></head><body><div class="box">
+<h1>⚓ One Piece Quiz</h1><p class="center">Prove you're a true pirate!</p>
+<div id="quiz"><div class="top"><span id="q">Q1/8</span><span id="s">Score: 0</span></div>
+<div class="bar"><i id="bar"></i></div><h2 id="text"></h2><div id="opts"></div>
+<p id="fb" style="font-weight:700"></p><button id="next">Next ➜</button></div>
+<div id="end" class="center" style="display:none"><h2 id="res"></h2><p id="rank"></p><button id="again">Sail again</button></div>
+</div>
+<script>
+const Q=[
+["Who is the captain of the Straw Hat Pirates?",["Zoro","Monkey D. Luffy","Sanji","Usopp"],1],
+["What is the name of Luffy's Devil Fruit?",["Mera Mera no Mi","Hana Hana no Mi","Gomu Gomu no Mi","Gura Gura no Mi"],2],
+["Who is known as 'The Strongest Man in the World'?",["Whitebeard","Shanks","Kaido","Garp"],0],
+["What is the name of the Straw Hats' second ship?",["Going Merry","Moby Dick","Red Force","Thousand Sunny"],3],
+["What is Zoro's dream?",["Find All Blue","Be World's Greatest Swordsman","Draw a map of the world","Become a doctor"],1],
+["What is the name of Whitebeard's ship?",["Moby Dick","Oro Jackson","Polar Tang","Heart Pirates' sub"],0],
+["Which crew member is the ship's navigator?",["Nami","Robin","Chopper","Franky"],0],
+["What is the legendary treasure everyone seeks?",["Poneglyph","Road Poneglyph","One Piece","Pluton"],2]];
+let i=0,sc=0;const $=id=>document.getElementById(id);
+function show(){const [t,o]=Q[i];$("q").textContent=`Q${i+1}/${Q.length}`;$("s").textContent="Score: "+sc;$("bar").style.width=(i/Q.length*100)+"%";$("text").textContent=t;$("fb").textContent="";$("next").style.display="none";
+$("opts").innerHTML="";o.forEach((x,k)=>{const b=document.createElement("button");b.className="opt";b.textContent=x;b.onclick=()=>pick(k);$("opts").appendChild(b)})}
+function pick(k){const c=Q[i][2];document.querySelectorAll(".opt").forEach((b,n)=>{b.disabled=true;if(n===c)b.classList.add("ok")});
+if(k===c){sc++;$("fb").textContent="✅ Correct! Yohoho!"}else{document.querySelectorAll(".opt")[k].classList.add("no");$("fb").textContent="❌ Wrong! Correct: "+Q[i][1][c]}
+$("s").textContent="Score: "+sc;$("next").style.display="inline-block";$("next").textContent=i===Q.length-1?"See result":"Next ➜"}
+$("next").onclick=()=>{i++;if(i<Q.length)show();else{$("quiz").style.display="none";$("end").style.display="block";
+$("res").textContent=`You scored ${sc}/${Q.length}`;$("rank").textContent=sc>=7?"👑 King of the Pirates!":sc>=4?"⚔️ Worthy Straw Hat crew member":"🌊 Cabin boy - keep training!"}};
+$("again").onclick=()=>{i=0;sc=0;$("end").style.display="none";$("quiz").style.display="block";show()};
+show();
+</script></body></html>
